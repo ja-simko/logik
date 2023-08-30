@@ -1,0 +1,18 @@
+{
+    "game": {
+                "b": "light_cyan",
+                "w": "white",
+                "y": "light_yellow",
+                "r": "light_red",
+                "m": "light_magenta",
+                "g": "light_green",
+                "l": "light_blue",
+                "k": "black"
+    },
+    "hint": [
+                "light_magenta",
+                "light_green"
+    ]
+    
+}
+

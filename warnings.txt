@@ -1,0 +1,6 @@
+{
+    "max_size": "The guess must be {guess_length} digits long.",
+    "disallowed_input" : "Only digits {numbers} or letters {letters} are allowed.",
+    "wrong_letters" : "Only these colors (letters) are allowed: {valid_letters}",
+    "wrong_numbers" : "The guess mustn't include digits higher than {num_of_colors}, or zeroes."
+}
