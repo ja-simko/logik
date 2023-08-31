@@ -39,7 +39,7 @@ def display(first, game_list=None, guesses=None, hints=None, file='colors.txt', 
             for clr_num in hints[count]:
                 print(colored('■ ',hint_c[clr_num]),end=' ')
             print('')
-        for i in range(size_set):    
+        for i in range(set_size):    
             print(colored('⬤ ','grey'),end=' ')
         if solution:
             print('')
@@ -53,7 +53,7 @@ def display(first, game_list=None, guesses=None, hints=None, file='colors.txt', 
             print(colored('⬤ ',game_c[i]),end=' ')
         return 
 
-    game_settings, size_set, num_of_colors, attempts, extra_atts,  record_max_atts = import_gsetts('game_settings.txt')
+    game_settings, set_size, num_of_colors, attempts, extra_atts,  record_max_atts = import_gsetts('game_settings.txt')
 
     letters_mapped_numbers, letters = generate_zip(num_of_colors)
 
@@ -77,7 +77,7 @@ def display(first, game_list=None, guesses=None, hints=None, file='colors.txt', 
     if not first:
         display_game()
     else:
-        for i in range(size_set):
+        for i in range(set_size):
             print(colored('⬤ ','black'),end=' ')
     print('')
 

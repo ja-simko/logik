@@ -21,8 +21,8 @@ def dump_to_file(file, content):
     with open(file, "w") as outfile:
         json.dump(content, outfile,indent=4)
 
-def generate_game_list(num_of_colors, size_set, letters_mapped_numbers, game_list=list()):
-    game_list = np.random.choice(list(letters_mapped_numbers.keys()), size=size_set)
+def generate_game_list(num_of_colors, set_size, letters_mapped_numbers, game_list=list()):
+    game_list = np.random.choice(list(letters_mapped_numbers.keys()), size=set_size)
     game_list = game_list.tolist()
     agg_1 = []
     agg_2 = []
@@ -32,7 +32,7 @@ def go_to_settings():
     data = read_internal_file('game_settings.txt')
     game_settings = data['game_settings']
     print(game_settings)
-    abbrev = {'siz':'size_set','num':'num_colors','att':'attempts','ext':'extra_attempts'} 
+    abbrev = {'siz':'set_size','num':'num_colors','att':'attempts','ext':'extra_attempts'} 
     for k in abbrev:
         print(k,end =' | ')
     option = input("\nSelect what you want to change: ")
@@ -51,7 +51,7 @@ def go_to_settings():
             print('Not a number.')
             return
 
-def welcome_in_game(size_set, num_of_colors):
+def welcome_in_game(set_size, num_of_colors):
     commands = ['h','menu','help']
     italic_commands = [colored("\x1B[3m'" + i + "'\x1B[0m","white") for i in commands]
     italic_commands_joined = "; ".join(italic_commands)
@@ -134,13 +134,13 @@ def get_input(commands):
         guess_as_str = input("Your guess: ")
     return guess_as_str
 
-def check_input(is_valid, num_of_colors, size_set, commands, agg_guesses, letters_mapped_numbers):
+def check_input(is_valid, num_of_colors, set_size, commands, agg_guesses, letters_mapped_numbers):
     while not is_valid:
         guess_as_str = get_input(commands)
         guess_list = manipulate_input(guess_as_str, guess_list = list())
         data = read_internal_file('warnings.txt')
-        if len(guess_list) != size_set:
-            print(data["max_size"].format(guess_length = size_set))
+        if len(guess_list) != set_size:
+            print(data["max_size"].format(guess_length = set_size))
             continue
         abc_guess, is_valid= letters_to_integers(guess_list, letters_mapped_numbers, num_of_colors, warnings = data)
     agg_guesses.append(abc_guess)
@@ -165,12 +165,12 @@ def end_game(max_attempts,player_attempts, extra, guess, solution):
             
 def start_the_game():
     player_attempts = 0
-    game_settings, size_set, num_of_colors, limit_attempts, extra_attempts, record_max_atts = import_gsetts('game_settings.txt')
-    access_menu_commands, letters_mapped_numbers = welcome_in_game(size_set, num_of_colors)
-    game_list, agg_guesses, agg_hints = generate_game_list(num_of_colors, size_set,letters_mapped_numbers)
+    game_settings, set_size, num_of_colors, limit_attempts, extra_attempts, record_max_atts = import_gsetts('game_settings.txt')
+    access_menu_commands, letters_mapped_numbers = welcome_in_game(set_size, num_of_colors)
+    game_list, agg_guesses, agg_hints = generate_game_list(num_of_colors, set_size,letters_mapped_numbers)
     is_end = False
     while not is_end:
-        abc_guess_list, agg_guesses = check_input(False, num_of_colors, size_set, access_menu_commands, agg_guesses, letters_mapped_numbers)
+        abc_guess_list, agg_guesses = check_input(False, num_of_colors, set_size, access_menu_commands, agg_guesses, letters_mapped_numbers)
 
         agg_hints = compare_sets(abc_guess_list, game_list, agg_hints)
 

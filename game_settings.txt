@@ -1,6 +1,6 @@
 {
     "game_settings": {
-        "size_set": [
+        "set_size": [
             5,
             8
         ],
