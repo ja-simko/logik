@@ -71,12 +71,13 @@ def display(first, game_list=None, guesses=None, hints=None, file='colors.txt', 
         display_solution()
         return
     
-    os.system('cls')
-
-    display_header()
+    
     if not first:
+        os.system('cls')
+        display_header()
         display_game()
     else:
+        display_header()
         for i in range(set_size):
             print(colored('⬤ ','black'),end=' ')
     print('')

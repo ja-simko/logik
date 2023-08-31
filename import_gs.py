@@ -1,5 +1,6 @@
 import json
 import itertools
+import time
 
 def read_internal_file(file):
     with open(file) as f:
@@ -25,3 +26,12 @@ def generate_zip(num_of_colors):
     letters_mapped_numbers_all = dict(zip(letters,list(range(1,len(letters)+1))))
     valid_mapping = dict(itertools.islice(letters_mapped_numbers_all.items(),num_of_colors))
     return valid_mapping, letters
+
+def countdown(time_sec):
+    while time_sec:
+        mins, secs = divmod(time_sec, 60)
+        timeformat = '{:02d}'.format(secs)
+        print(timeformat, end='\r')
+        time.sleep(1)
+        time_sec -= 1
+    return

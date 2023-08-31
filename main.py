@@ -8,8 +8,7 @@ import json
 from termcolor import colored
 from display import display
 from compare_sets import compare_sets
-
-from import_gs import import_gsetts, generate_zip
+from import_gs import import_gsetts, generate_zip, countdown
 
 def read_internal_file(file):
     with open(file) as f:
@@ -21,7 +20,7 @@ def dump_to_file(file, content):
     with open(file, "w") as outfile:
         json.dump(content, outfile,indent=4)
 
-def generate_game_list(num_of_colors, set_size, letters_mapped_numbers, game_list=list()):
+def generate_game_list(set_size, letters_mapped_numbers, game_list=list()):
     game_list = np.random.choice(list(letters_mapped_numbers.keys()), size=set_size)
     game_list = game_list.tolist()
     agg_1 = []
@@ -32,7 +31,7 @@ def go_to_settings():
     data = read_internal_file('game_settings.txt')
     game_settings = data['game_settings']
     print(game_settings)
-    abbrev = {'siz':'set_size','num':'num_colors','att':'attempts','ext':'extra_attempts'} 
+    abbrev = {'set':'set_size','num':'num_colors','att':'attempts','ext':'extra_attempts'} 
     for k in abbrev:
         print(k,end =' | ')
     option = input("\nSelect what you want to change: ")
@@ -43,23 +42,28 @@ def go_to_settings():
             if value > data['game_settings'][full_name][1]:
                 print("Too many! Have you lost your marbles?!",end=' ')
                 print("The limit is mere "+str(data['game_settings'][full_name][1]))
+                countdown(5)
                 return
             else:
                 data['game_settings'][full_name][0] = value
                 dump_to_file('game_settings.txt',data)
+                print('We recommend quitting the game to assure everything\'s working properly.')
+                countdown(5)
+                return
         except:
             print('Not a number.')
+            countdown(3)
             return
 
 def welcome_in_game(set_size, num_of_colors):
+    os.system('cls')
     commands = ['h','menu','help']
     italic_commands = [colored("\x1B[3m'" + i + "'\x1B[0m","white") for i in commands]
     italic_commands_joined = "; ".join(italic_commands)
     parenthesis = colored(")","light_yellow")
-    print(colored(f"Welcome in LOGIK, aka MASTERMIND\n(to see more options, type: {str(italic_commands_joined)}{parenthesis}","light_yellow"))
-
-    letters_mapped_numbers, letters = generate_zip(num_of_colors)
+    print(colored(f"WELCOME IN LOGIK, AKA MASTERMIND\n(to see more options, type: {str(italic_commands_joined)}{parenthesis}","light_yellow"))
     display(True)
+    letters_mapped_numbers, letters = generate_zip(num_of_colors)
     return commands, letters_mapped_numbers
 
 def get_to_menu():
@@ -167,7 +171,7 @@ def start_the_game():
     player_attempts = 0
     game_settings, set_size, num_of_colors, limit_attempts, extra_attempts, record_max_atts = import_gsetts('game_settings.txt')
     access_menu_commands, letters_mapped_numbers = welcome_in_game(set_size, num_of_colors)
-    game_list, agg_guesses, agg_hints = generate_game_list(num_of_colors, set_size,letters_mapped_numbers)
+    game_list, agg_guesses, agg_hints = generate_game_list(set_size,letters_mapped_numbers)
     is_end = False
     while not is_end:
         abc_guess_list, agg_guesses = check_input(False, num_of_colors, set_size, access_menu_commands, agg_guesses, letters_mapped_numbers)
