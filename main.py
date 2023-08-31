@@ -6,8 +6,9 @@ import time
 import keyboard
 import json
 from termcolor import colored
-from alt_display import display
-from alt_compare_guess_game_set import compare_sets
+from display import display
+from compare_sets import compare_sets
+
 from import_gs import import_gsetts, generate_zip
 
 def read_internal_file(file):
