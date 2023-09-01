@@ -1,4 +1,4 @@
-Welcome to the game Logik, also known as Mastermind.
+### Welcome to the game Logik, also known as Mastermind.
 
 Mastermind is a challenging puzzle game that originally involved two players.
 One player is a codemaker and the other is a codebreaker.
